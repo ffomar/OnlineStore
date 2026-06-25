@@ -1,0 +1,24 @@
+@model List<MyApp.Models.Item>
+@{
+    ViewData["Title"] = "Index";  
+}
+
+<h3>Index</h3>
+
+<table class="table">
+    <thead>
+        <tbody>
+            <tr>
+                <th>Name</th>
+                <th>Price</th>
+            </tr>
+        </tbody>
+        @foreach(var item in Model){
+            <tr>
+                <td>@item.Name</td>
+                <td>@item.Price.ToString("N2")</td>
+            </tr>
+        }
+    </thead>
+
+</table>
