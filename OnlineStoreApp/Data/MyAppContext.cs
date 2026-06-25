@@ -19,10 +19,15 @@ namespace MyApp.Data
             modelBuilder.Entity<SerialNumber>().HasData(
                 new SerialNumber { Id = 15, Name = "mic150", ItemId = 5 }
             );
+            modelBuilder.Entity<Category>().HasData(
+                new Category{ id = 1, Name = "Electronics"},
+                new Category{ id = 2, Name = "Books"}
+            );
             base.OnModelCreating(modelBuilder);
         }
 
         public DbSet<Item> Items { get; set; } = null!;
         public DbSet<SerialNumber> SerialNumbers { get; set; } = null!;
+        public DbSet<Category> Categories { set; get;}
     }
 }
