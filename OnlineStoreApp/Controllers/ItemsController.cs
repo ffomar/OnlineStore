@@ -24,7 +24,7 @@ namespace OnlineStoreApp.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var item = await _context.Items.ToListAsync();
+            var item = await _context.Items.Include(s=> s.SerialNumber).ToListAsync();
             return View(item);
         }
 
