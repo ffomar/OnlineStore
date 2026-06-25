@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Identity.Client;
-using MyApp.Models;
+using OnlineStoreApp.Models;
 
 namespace MyApp.Data
 {

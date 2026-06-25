@@ -1,4 +1,4 @@
-namespace MyApp.Models
+namespace OnlineStoreApp.Models
 {
     public class Item
     {
