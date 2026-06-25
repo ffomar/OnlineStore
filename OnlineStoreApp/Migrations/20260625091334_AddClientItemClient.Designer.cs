@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MyApp.Data;
 
@@ -10,9 +11,11 @@ using MyApp.Data;
 namespace OnlineStoreApp.Migrations
 {
     [DbContext(typeof(MyAppContext))]
-    partial class MyAppContextModelSnapshot : ModelSnapshot
+    [Migration("20260625091334_AddClientItemClient")]
+    partial class AddClientItemClient
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -65,18 +68,6 @@ namespace OnlineStoreApp.Migrations
                     b.HasKey("id");
 
                     b.ToTable("Clients");
-
-                    b.HasData(
-                        new
-                        {
-                            id = 1,
-                            Name = "Zac"
-                        },
-                        new
-                        {
-                            id = 2,
-                            Name = "Martin"
-                        });
                 });
 
             modelBuilder.Entity("OnlineStoreApp.Models.Item", b =>
@@ -134,18 +125,6 @@ namespace OnlineStoreApp.Migrations
                     b.HasIndex("ClientId");
 
                     b.ToTable("ItemClients");
-
-                    b.HasData(
-                        new
-                        {
-                            itemId = 5,
-                            ClientId = 1
-                        },
-                        new
-                        {
-                            itemId = 4,
-                            ClientId = 2
-                        });
                 });
 
             modelBuilder.Entity("OnlineStoreApp.Models.SerialNumber", b =>

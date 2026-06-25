@@ -27,7 +27,8 @@ namespace OnlineStoreApp.Controllers
         {
             var item = await _context.Items.Include(s=> s.SerialNumber)
                                             .Include(s=>s.Category)
-                                            .ToListAsync();
+                                            .Include(ic=>ic.ItemClients)
+                                            .ThenInclude(ic=>ic.Client).ToListAsync();
             return View(item);
         }
 
