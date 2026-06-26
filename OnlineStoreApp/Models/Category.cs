@@ -1,10 +1,14 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace OnlineStoreApp.Models
 {
     public class Category
     {
-        public int id { get; set; }
-        public string Name { get; set; } = null!;
-        public List<Item>? Items { get; set; }
+        [Key]
+        public int Id { get; set; }
 
+        public required string Name { get; set; }
+
+        public List<Item>? Items { get; set; }
     }
 }

@@ -1,18 +1,25 @@
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace OnlineStoreApp.Models
 {
     public class Item
     {
-        public int Id {get; set;}
-        public string Name {get; set;} = null!;
-        public double Price {get; set;}
-        public int? SerialNumberId{get;set;}
-        public SerialNumber? SerialNumber{get;set;}
-        public int? CategoryId{get;set;}
-        [ForeignKey("CategoryId")]
-        public Category? Category {get;set;}
+        [Key]
+        [StringLength(24, ErrorMessage = "The Serial Number cannot exceed 24 characters.")]
+        public required string Serial {get; set;}
 
-        public List<ItemClient>? ItemClients { get; set;}
+        public required string Name {get; set;}
+
+        public double ?Price {get; set;}
+
+        public string? ClientName {get; set;}
+        public string? ClientAddress {get; set;}
+        [ForeignKey("ClientName,ClientAddress")]
+        public Client? Client {get; set;}
+
+        public int ?CategoryId {get; set;}
+        [ForeignKey("CategoryId")]
+        public Category ?Category {get;set;}
     }
 }

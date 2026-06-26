@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.HttpOverrides;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,6 +19,10 @@ if (!app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseHttpMethodOverride(new HttpMethodOverrideOptions
+{
+    FormFieldName = "_method"
+});
 app.UseRouting();
 
 app.UseAuthorization();

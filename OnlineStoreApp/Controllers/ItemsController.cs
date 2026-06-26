@@ -1,4 +1,5 @@
 using System.Security.Cryptography;
+using System.Text;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -17,79 +18,139 @@ namespace OnlineStoreApp.Controllers
             _context  = context; 
         }
 
-        public IActionResult Overview()
-        {   
-            var item = new Item() {Name = "keyboard"};
-            return View(item);
-        }
-
         public async Task<IActionResult> Index()
         {
-            var item = await _context.Items.Include(s=> s.SerialNumber)
-                                            .Include(s=>s.Category)
-                                            .Include(ic=>ic.ItemClients)
-                                            .ThenInclude(ic=>ic.Client).ToListAsync();
-            return View(item);
+            var items = await _context.Items.Include(x=>x.Category)
+                                            .Include(x=>x.Client)
+                                            .ToListAsync();
+            return View(items);
         }
+    
 
-        public async Task<IActionResult> Create()
+
+        [HttpGet]
+        public IActionResult Create()
         {
-            ViewData["Categories"]= new SelectList(_context.Categories, "id", "Name");
+            ViewBag.Categories = new SelectList(_context.Categories, "Id", "Name");
             return View();
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create([Bind("Id, Name, Price, CategoryId")] Item item)
+        public async Task<IActionResult> Create(Item item)
         {
-            if (ModelState.IsValid)
+            // Generate a unique serial number for the item
+            item.Serial = await GenerateUniqueSerialAsync();
+            
+            //reset the model state and validate the item again to include the generated serial number
+            ModelState.Clear();
+            TryValidateModel(item);
+
+            if (!ModelState.IsValid)
             {
-                _context.Items.Add(item);
-                await _context.SaveChangesAsync();
-                return RedirectToAction("Index");
+                ViewBag.Categories = new SelectList(_context.Categories, "Id", "Name");
+                return View(item);
             }
-            ViewData["Categories"]= new SelectList(_context.Categories, "id", "Name");
-            return View(item);
-        }
 
-        public async Task<IActionResult> Edit(int id)
-        {
-            ViewData["Categories"]= new SelectList(_context.Categories, "id", "Name");
-            var item = await _context.Items.FirstOrDefaultAsync(x=>x.Id == id);
-
-            return View(item);
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> Edit(int id, [Bind("Id, Name, Price, CategoryId")] Item item)
-        {
-            if (ModelState.IsValid)
-            {
-                _context.Update(item);
-                await _context.SaveChangesAsync();
-                return RedirectToAction("Index");
-            }
-            ViewData["Categories"]= new SelectList(_context.Categories, "id", "Name");
-            return View(item);
-        }
-
-        public async Task<IActionResult> Delete(int id)
-        {
-            var item = await _context.Items.FirstOrDefaultAsync(x=>x.Id == id);
-            return View(item);
-        }
-
-
-        [HttpPost, ActionName("Delete")]
-        public async Task<IActionResult> DeleteItem(int id)
-        {
-            var item = await _context.Items.FindAsync(id);
-            if(item != null)
-            {
-                _context.Items.Remove(item);
-                await _context.SaveChangesAsync();
-            }
+            _context.Items.Add(item);
+            await _context.SaveChangesAsync();
             return RedirectToAction("Index");
         }
 
+
+
+        [HttpGet]
+        public IActionResult Edit(string serial)
+        {
+            var item = _context.Items.Find(serial);
+            if (item == null)
+            {
+                return NotFound();
+            }
+
+            ViewBag.Categories = new SelectList(_context.Categories, "Id", "Name");
+            return View(item);
+        }
+
+        [HttpPut]
+        public async Task<IActionResult> Edit(Item item)
+        {
+            if (!ModelState.IsValid)
+            {
+                ViewBag.Categories = new SelectList(_context.Categories, "Id", "Name");
+                return View(item);
+            }
+            
+            _context.Items.Update(item);
+            await _context.SaveChangesAsync();
+            return RedirectToAction("Index");
+        }
+
+
+
+        [HttpGet]
+        public async Task<IActionResult> Delete(string serial)
+        {
+            var item = await _context.Items.FindAsync(serial);
+            if (item == null)
+            {
+                return NotFound();
+            }
+
+            ViewBag.Categories = new SelectList(_context.Categories, "Id", "Name");
+            return View(item);
+        }
+
+        [HttpDelete]
+        public async Task<IActionResult> Delete(Item item)
+        {
+            var existingItem = await _context.Items.FindAsync(item.Serial);
+
+            if (existingItem == null)
+            {
+                return NotFound();
+            }
+
+            _context.Items.Remove(existingItem);
+            await _context.SaveChangesAsync();
+            return RedirectToAction("Index");
+        }
+
+
+
+
+
+
+
+
+        // Helper Method: Loops until an unused serial number is found
+        private async Task<string> GenerateUniqueSerialAsync()
+        {
+            const string pool = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+            bool isDuplicate = true;
+            string finalSerial = string.Empty;
+
+            // Keep looping until we find a serial number that does NOT exist in SQL Server
+            while (isDuplicate)
+            {
+                var builder = new StringBuilder();
+                for (int i = 0; i < 21; i++)
+                {
+                    if (i == 5 || i == 10 || i == 15)
+                    {
+                        builder.Append("-");
+                    }
+
+                    int randomIndex = RandomNumberGenerator.GetInt32(pool.Length);
+                    builder.Append(pool[randomIndex]);
+                }
+
+                finalSerial = builder.ToString();
+
+                // Check the database for collisions
+                isDuplicate = await _context.Items.AnyAsync(x => x.Serial == finalSerial);
+            }
+
+            return finalSerial;
+        }
     }
 }

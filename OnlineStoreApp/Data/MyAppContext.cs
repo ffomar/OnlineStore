@@ -11,41 +11,59 @@ namespace MyApp.Data
         {
         }
 
+        // Db set for each entity
+        public DbSet<Item> Items { get; set; } = null!;
+
+        public DbSet<Category> Categories { set; get;}
+
+        public DbSet<Client> Clients { set; get;}
+
+
+        // Model relationships and seed data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<ItemClient>().HasKey(ic => new { 
-                ic.itemId,
-                ic.ClientId
-            });
 
-            modelBuilder.Entity<ItemClient>().HasOne(i=>i.Item).WithMany(ic => ic.ItemClients).HasForeignKey(i=>i.itemId);
-            modelBuilder.Entity<ItemClient>().HasOne(ic=>ic.Client).WithMany(c => c.ItemClients).HasForeignKey(ic=>ic.ClientId);
+            // Define composite primary key for Client entity
+            modelBuilder.Entity<Client>()
+                        .HasKey(Client => new { Client.Name, Client.Address });
 
-            modelBuilder.Entity<Item>().HasData(
-                new Item { Id = 5, Name = "microphone", Price = 40, SerialNumberId = 15 }
-            );
-            modelBuilder.Entity<SerialNumber>().HasData(
-                new SerialNumber { Id = 1, Name = "mic150", ItemId = 5 }
-            );
+            // Configure optional many-to-one relationship from Item to Client
+            modelBuilder.Entity<Item>()
+                .HasOne(x => x.Client)
+                .WithMany(x => x.Items)
+                .HasForeignKey(i => new { i.ClientName, i.ClientAddress })
+                .IsRequired(false);
+
+            // Configure optional many-to-one relationship from Item to Category
+            modelBuilder.Entity<Item>()
+                .HasOne(x => x.Category)
+                .WithMany(x => x.Items)
+                .HasForeignKey(i => i.CategoryId)
+                .IsRequired(false);
+
+
+            // Seed 
             modelBuilder.Entity<Category>().HasData(
-                new Category{ id = 1, Name = "Electronics"},
-                new Category{ id = 2, Name = "Books"}
+                new Category { Id = 1, Name = "Electronics" },
+                new Category { Id = 2, Name = "Clothing" },
+                new Category { Id = 3, Name = "Books" }
             );
+
+            Client JoeTheClient = new Client { Name = "John Doe", Address = "123 Main St", Phone = 1234567890 };
+            Client JaneTheClient = new Client { Name = "Jane Smith", Address = "456 Elm St", Phone = 9876543210 };
             modelBuilder.Entity<Client>().HasData(
-                new Client{ id = 1, Name = "Zac"},
-                new Client{ id = 2, Name = "Martin"}
+                JoeTheClient,
+                JaneTheClient
             );
-            modelBuilder.Entity<ItemClient>().HasData(
-                new ItemClient{ itemId = 5, ClientId = 1},
-                new ItemClient{ itemId = 4, ClientId = 2}
+
+            /*
+            modelBuilder.Entity<Item>().HasData(
+                new Item { Serial = "92JR4-6999C-RCJYV-90M24R", Name = "Laptop", Price = 999.99, CategoryId = 1, ClientName = JoeTheClient.Name, ClientAddress = JoeTheClient.Address },
+                new Item { Serial = "L28S4-29133-73NYR-JIM343", Name = "T-Shirt", Price = 19.99, CategoryId = 2, ClientName = JaneTheClient.Name, ClientAddress = JaneTheClient.Address }
             );
+            */
+
             base.OnModelCreating(modelBuilder);
         }
-
-        public DbSet<Item> Items { get; set; } = null!;
-        public DbSet<SerialNumber> SerialNumbers { get; set; } = null!;
-        public DbSet<Category> Categories { set; get;}
-        public DbSet<Client> Clients { set; get;}
-        public DbSet<ItemClient> ItemClients { set; get;}
     }
 }

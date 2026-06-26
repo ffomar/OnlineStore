@@ -6,10 +6,12 @@
 
 <H3> Are you sure you want to delete this item?</H3>
 
-<p>@Model.Name<p/>
-<p>@Model.Price $<p/>
+<p>@Model.Name</p>
+<p>@Model.Price $</p>
 
-<form asp-action="Delete" method="post">
-    <input type="hidden" asp-for="Id"/>
-    <input type="submit" class"btn btn-danger" value="Delete"/> 
+    <form asp-action="Delete" method="post">
+    <input type="hidden" name="_method" value="DELETE" />
+    <input type="hidden" asp-for="Serial"/>
+    
+    <input type="submit" class="btn btn-danger" value="Delete"/> 
 </form>

@@ -10,9 +10,9 @@
         <tr>
             <th>Name</th>
             <th>Price</th>
-            <th>Serial Number</th>
+            <th>Serial</th>
             <th>Category</th>
-            <th>Clients</th>            
+            <th>Client</th>            
             <th></th>
         </tr>
     </thead>
@@ -20,17 +20,13 @@
         @foreach(var item in Model){
             <tr>
                 <td>@item.Name</td>
-                <td>@item.Price.ToString("N2") $</td>
-                <td>@(item.SerialNumber?.Name ?? "")</td>
+                <td>@item.Price?.ToString("N2") $</td>
+                <td>@(item.Serial ?? "")</td>
                 <td>@(item.Category?.Name ?? "")</td>
+                <td>@(item.Client?.Name ?? "")</td>
                 <td>
-                    @foreach(var client in item.ItemClients){
-                        @client.Client.Name
-                    }
-                </td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a>
-                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    <a asp-action="Edit" asp-route-serial="@item.Serial">Edit</a>
+                    <a asp-action="Delete" asp-route-serial="@item.Serial">Delete</a>
                 </td>
             </tr>
         }
