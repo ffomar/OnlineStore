@@ -25,7 +25,7 @@ namespace MyApp.Data
                 new Item { Id = 5, Name = "microphone", Price = 40, SerialNumberId = 15 }
             );
             modelBuilder.Entity<SerialNumber>().HasData(
-                new SerialNumber { Id = 15, Name = "mic150", ItemId = 5 }
+                new SerialNumber { Id = 1, Name = "mic150", ItemId = 5 }
             );
             modelBuilder.Entity<Category>().HasData(
                 new Category{ id = 1, Name = "Electronics"},
