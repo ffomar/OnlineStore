@@ -32,12 +32,15 @@ namespace OnlineStoreApp.Controllers
         public IActionResult Create()
         {
             ViewBag.Categories = new SelectList(_context.Categories, "Id", "Name");
+            ViewBag.Clients = BuildClientSelectList();
             return View();
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(Item item)
+        public async Task<IActionResult> Create(Item item, string? clientKey)
         {
+            ApplyClientKey(item, clientKey);
+
             // Generate a unique serial number for the item
             item.Serial = await GenerateUniqueSerialAsync();
             
@@ -48,6 +51,7 @@ namespace OnlineStoreApp.Controllers
             if (!ModelState.IsValid)
             {
                 ViewBag.Categories = new SelectList(_context.Categories, "Id", "Name");
+                ViewBag.Clients = BuildClientSelectList(clientKey);
                 return View(item);
             }
 
@@ -68,15 +72,19 @@ namespace OnlineStoreApp.Controllers
             }
 
             ViewBag.Categories = new SelectList(_context.Categories, "Id", "Name");
+            ViewBag.Clients = BuildClientSelectList(GetClientKey(item.ClientName, item.ClientAddress));
             return View(item);
         }
 
         [HttpPut]
-        public async Task<IActionResult> Edit(Item item)
+        public async Task<IActionResult> Edit(Item item, string? clientKey)
         {
+            ApplyClientKey(item, clientKey);
+
             if (!ModelState.IsValid)
             {
                 ViewBag.Categories = new SelectList(_context.Categories, "Id", "Name");
+                ViewBag.Clients = BuildClientSelectList(clientKey);
                 return View(item);
             }
             
@@ -95,8 +103,7 @@ namespace OnlineStoreApp.Controllers
             {
                 return NotFound();
             }
-
-            ViewBag.Categories = new SelectList(_context.Categories, "Id", "Name");
+            
             return View(item);
         }
 
@@ -151,6 +158,60 @@ namespace OnlineStoreApp.Controllers
             }
 
             return finalSerial;
+        }
+
+        private SelectList BuildClientSelectList(string? selectedClientKey = null)
+        {
+            var clientOptions = _context.Clients
+                .AsNoTracking()
+                .Select(c => new
+                {
+                    CompositeKey = c.Name + "||" + c.Address,
+                    DisplayText = c.Name + " - " + c.Address
+                })
+                .ToList();
+
+            return new SelectList(clientOptions, "CompositeKey", "DisplayText", selectedClientKey);
+        }
+
+        private static string? GetClientKey(string? clientName, string? clientAddress)
+        {
+            if (string.IsNullOrWhiteSpace(clientName) || string.IsNullOrWhiteSpace(clientAddress))
+            {
+                return null;
+            }
+
+            return clientName + "||" + clientAddress;
+        }
+
+        private static void ApplyClientKey(Item item, string? clientKey)
+        {
+            if (string.IsNullOrWhiteSpace(clientKey))
+            {
+                item.ClientName = null;
+                item.ClientAddress = null;
+                return;
+            }
+
+            var parts = clientKey.Split("||", 2, StringSplitOptions.None);
+            if (parts.Length == 2)
+            {
+                item.ClientName = parts[0];
+                item.ClientAddress = parts[1];
+                return;
+            }
+
+            item.ClientName = null;
+            item.ClientAddress = null;
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ClearAll()
+        {
+            var allItems = await _context.Items.ToListAsync();
+            _context.Items.RemoveRange(allItems);
+            await _context.SaveChangesAsync();
+            return RedirectToAction("Index");
         }
     }
 }

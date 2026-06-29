@@ -56,13 +56,6 @@ namespace MyApp.Data
                 JaneTheClient
             );
 
-            /*
-            modelBuilder.Entity<Item>().HasData(
-                new Item { Serial = "92JR4-6999C-RCJYV-90M24R", Name = "Laptop", Price = 999.99, CategoryId = 1, ClientName = JoeTheClient.Name, ClientAddress = JoeTheClient.Address },
-                new Item { Serial = "L28S4-29133-73NYR-JIM343", Name = "T-Shirt", Price = 19.99, CategoryId = 2, ClientName = JaneTheClient.Name, ClientAddress = JaneTheClient.Address }
-            );
-            */
-
             base.OnModelCreating(modelBuilder);
         }
     }

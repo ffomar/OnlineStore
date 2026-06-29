@@ -11,8 +11,8 @@ using MyApp.Data;
 namespace OnlineStoreApp.Migrations
 {
     [DbContext(typeof(MyAppContext))]
-    [Migration("20260626220625_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20260629052438_StartSet")]
+    partial class StartSet
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
