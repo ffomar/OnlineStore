@@ -57,6 +57,25 @@ header {
   border-color: #333 !important;
 }
 
+.import-pill-btn {
+  background: linear-gradient(135deg, #0ea5e9, #2563eb) !important;
+  color: #ffffff !important;
+  border: 1px solid #1e40af !important;
+  border-radius: 999px !important;
+  padding: 0.45rem 1rem !important;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  box-shadow: 0 4px 10px rgba(37, 99, 235, 0.25);
+}
+
+.import-pill-btn:hover {
+  background: linear-gradient(135deg, #0284c7, #1d4ed8) !important;
+  color: #ffffff !important;
+  border-color: #1e3a8a !important;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 14px rgba(29, 78, 216, 0.3);
+}
+
 .container {
   max-width: 1200px;
   margin-top: 2rem;
