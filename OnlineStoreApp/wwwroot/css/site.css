@@ -19,6 +19,153 @@ html {
 
 body {
   margin-bottom: 60px;
+  background-color: #f5f5f5;
+}
+
+/* Rigid Layout Styles */
+header {
+  border-bottom: 3px solid #333;
+  background-color: white;
+}
+
+.navbar {
+  padding: 1rem 1.5rem !important;
+  border-radius: 0 !important;
+}
+
+.navbar-brand {
+  font-weight: bold;
+  font-size: 1.3rem;
+  border: 2px solid #333;
+  padding: 0.5rem 1rem !important;
+  background-color: #f0f0f0;
+}
+
+.navbar-nav {
+  gap: 1.5rem;
+}
+
+.nav-link {
+  border: 1px solid #ddd !important;
+  padding: 0.5rem 1rem !important;
+  border-radius: 0;
+  font-weight: 500;
+}
+
+.nav-link:hover {
+  background-color: #e9ecef;
+  border-color: #333 !important;
+}
+
+.container {
+  max-width: 1200px;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  padding: 0;
+}
+
+main {
+  background-color: white;
+  border: 2px solid #333;
+  padding: 2rem !important;
+}
+
+.table {
+  border-collapse: collapse;
+  margin-top: 1.5rem;
+  border: 2px solid #333;
+}
+
+.table thead {
+  background-color: #f0f0f0;
+  border: 2px solid #333;
+}
+
+.table th {
+  border: 1px solid #333 !important;
+  padding: 0.75rem !important;
+  font-weight: bold;
+  text-align: left;
+}
+
+.table td {
+  border: 1px solid #ddd !important;
+  padding: 0.75rem !important;
+  vertical-align: middle;
+}
+
+.table tbody tr:hover {
+  background-color: #f9f9f9;
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+  border: 1px solid #ddd;
+  padding: 1rem;
+  background-color: #fafafa;
+}
+
+.form-control, .form-select {
+  border: 2px solid #333 !important;
+  border-radius: 0 !important;
+  padding: 0.5rem 0.75rem;
+}
+
+.form-control:focus, .form-select:focus {
+  border-color: #0d6efd !important;
+  box-shadow: 0 0 0 0 !important;
+  background-color: white;
+}
+
+label {
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  display: block;
+}
+
+.btn {
+  border: 2px solid #333 !important;
+  border-radius: 0 !important;
+  padding: 0.5rem 1.2rem !important;
+  font-weight: 600;
+}
+
+.btn-primary {
+  background-color: #333 !important;
+  color: white !important;
+}
+
+.btn-primary:hover {
+  background-color: #555 !important;
+}
+
+a {
+  text-decoration: none;
+  color: #0066cc;
+  border-bottom: 1px solid #0066cc;
+}
+
+a:hover {
+  color: #004c99;
+  border-bottom: 2px solid #004c99;
+}
+
+footer {
+  border-top: 3px solid #333 !important;
+  background-color: white;
+  padding: 1.5rem 0 !important;
+  margin-top: 2rem;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 1rem 0;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid #333;
+  font-weight: bold;
+}
+
+input[type="text"], input[type="number"], input[type="email"], textarea {
+  font-family: monospace;
 }
 
 .form-floating > .form-control-plaintext::placeholder, .form-floating > .form-control::placeholder {
@@ -28,4 +175,153 @@ body {
 
 .form-floating > .form-control-plaintext:focus::placeholder, .form-floating > .form-control:focus::placeholder {
   text-align: start;
+}
+
+/* Space Effect Styles */
+.space-container {
+  position: relative;
+  background: radial-gradient(ellipse at bottom, #1B2735 0%, #090A0F 100%);
+  min-height: 100vh;
+  overflow: hidden;
+  padding: 4rem 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.space-container::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: 
+    /* Small bright stars */
+    radial-gradient(1px 1px at 10% 20%, white, transparent),
+    radial-gradient(1px 1px at 20% 30%, white, transparent),
+    radial-gradient(1px 1px at 50% 50%, white, transparent),
+    radial-gradient(1px 1px at 80% 10%, white, transparent),
+    radial-gradient(1px 1px at 90% 60%, white, transparent),
+    radial-gradient(1px 1px at 30% 80%, white, transparent),
+    radial-gradient(1px 1px at 60% 90%, white, transparent),
+    radial-gradient(1px 1px at 15% 70%, white, transparent),
+    radial-gradient(1px 1px at 70% 40%, white, transparent),
+    radial-gradient(1px 1px at 40% 10%, white, transparent),
+    /* Medium stars */
+    radial-gradient(1.5px 1.5px at 25% 45%, rgba(255, 255, 255, 0.8), transparent),
+    radial-gradient(1.5px 1.5px at 75% 75%, rgba(255, 255, 255, 0.7), transparent),
+    radial-gradient(1.5px 1.5px at 35% 15%, rgba(255, 255, 255, 0.9), transparent),
+    radial-gradient(1.5px 1.5px at 85% 35%, rgba(255, 255, 255, 0.8), transparent),
+    /* Larger stars */
+    radial-gradient(2px 2px at 12% 50%, rgba(255, 200, 100, 0.9), transparent),
+    radial-gradient(2px 2px at 65% 65%, rgba(100, 200, 255, 0.8), transparent),
+    radial-gradient(2px 2px at 45% 25%, rgba(200, 150, 255, 0.8), transparent),
+    radial-gradient(2px 2px at 88% 88%, rgba(255, 255, 150, 0.9), transparent),
+    /* Color nebula stars */
+    radial-gradient(2.5px 2.5px at 22% 78%, rgba(0, 255, 200, 0.7), transparent),
+    radial-gradient(2.5px 2.5px at 78% 22%, rgba(255, 0, 200, 0.6), transparent);
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  animation: twinkle 4s ease-in-out infinite;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.space-container::after {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: 
+    radial-gradient(circle at 20% 50%, rgba(255, 0, 255, 0.15), transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(0, 255, 200, 0.15), transparent 50%),
+    radial-gradient(circle at 50% 50%, rgba(100, 150, 255, 0.08), transparent 60%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.space-form {
+  position: relative;
+  z-index: 2;
+  background: rgba(20, 20, 40, 0.85);
+  border: 2px solid #00FFFF;
+  padding: 3rem 3rem;
+  width: 100%;
+  max-width: 600px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 0 20px rgba(0, 255, 255, 0.3), inset 0 0 20px rgba(0, 255, 255, 0.1);
+}
+
+.space-form h3 {
+  color: #00FFFF;
+  text-shadow: 0 0 10px #00FFFF, 0 0 20px #0088FF;
+  border-bottom: 2px solid #00FFFF;
+  margin-bottom: 2.5rem;
+  font-size: 1.8rem;
+  padding-bottom: 1rem;
+}
+
+.space-form .form-group {
+  background: rgba(30, 30, 50, 0.6);
+  border: 1px solid #0088FF;
+  padding: 1.25rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 0 10px rgba(0, 136, 255, 0.2);
+}
+
+.space-form label {
+  color: #00FFFF;
+  font-weight: bold;
+  text-shadow: 0 0 5px #00FFFF;
+  margin-bottom: 0.75rem;
+  display: block;
+  font-size: 1.05rem;
+}
+
+.space-form .form-control,
+.space-form .form-select {
+  background: rgba(10, 10, 30, 0.8) !important;
+  border: 1px solid #0088FF !important;
+  color: #00FFFF !important;
+  padding: 0.7rem 1rem !important;
+  font-size: 1rem;
+}
+
+.space-form .form-control::placeholder {
+  color: #0088FF;
+}
+
+.space-form .form-control:focus,
+.space-form .form-select:focus {
+  background: rgba(10, 10, 30, 0.9) !important;
+  border-color: #00FFFF !important;
+  box-shadow: 0 0 15px rgba(0, 255, 255, 0.5) !important;
+  color: #00FFFF !important;
+}
+
+.space-form .btn-primary {
+  background: linear-gradient(135deg, #0088FF, #00FFFF) !important;
+  color: black !important;
+  border: 2px solid #00FFFF !important;
+  font-weight: bold;
+  text-shadow: none;
+  box-shadow: 0 0 15px rgba(0, 255, 255, 0.5);
+  transition: all 0.3s ease;
+  padding: 0.8rem 2.5rem !important;
+  font-size: 1.05rem;
+  margin-top: 1rem;
+}
+
+.space-form .btn-primary:hover {
+  background: linear-gradient(135deg, #00FFFF, #0088FF) !important;
+  box-shadow: 0 0 25px rgba(0, 255, 255, 0.8);
+  transform: scale(1.05);
+}
+
+@keyframes twinkle {
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 1; }
 }

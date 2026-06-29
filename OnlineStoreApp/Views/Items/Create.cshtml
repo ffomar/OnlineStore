@@ -5,25 +5,28 @@
     ViewData["Title"]="Create";
 }
 
-<H3> Create an item</H3>
+<div class="space-container">
+    <div class="space-form">
+        <h3>🚀 Create an Item</h3>
 
-<form asp-action="Create" method="post">
-    <div class="form-group">
-        <label for="Name">Name</label>
-        <input type="text" class="form-control" asp-for="Name"/>
+        <form asp-action="Create" method="post">
+            <div class="form-group">
+                <label for="Name">Name</label>
+                <input type="text" class="form-control" asp-for="Name" placeholder="Enter item name"/>
+            </div>
+            <div class="form-group">
+                <label for="Price">Price</label>
+                <input type="number" step="0.01" class="form-control" asp-for="Price" placeholder="0.00" />
+            </div>
+            <div class="form-group">
+                <label for="CategoryId">Category</label>
+                <select asp-for="CategoryId" asp-items="ViewBag.Categories" class="form-select"></select>
+            </div>
+            <div class="form-group">
+                <label for="clientKey">Client</label>
+                <select name="clientKey" id="clientKey" asp-items="ViewBag.Clients" class="form-select"></select>
+            </div>
+            <button type="submit" class="btn btn-primary">✨ Submit</button>
+        </form>
     </div>
-    <div class="form-group">
-        <label for="Price">Price</label>
-        <input type="number" step="0.01" class="form-control" asp-for="Price" />
-    </div>
-    <div class="form-group">
-        <label for="CategoryId">Category</label>
-        <select asp-for="CategoryId" asp-items="ViewBag.Categories" class="form-select"></select>
-    </div>
-    <div class="form-group">
-        <label for="clientKey">Client</label>
-        <select name="clientKey" id="clientKey" asp-items="ViewBag.Clients" class="form-select"></select>
-    </div>
-    <button type="submit" class="btn btn-primary">Submit</button>
-
-</form>
+</div>

@@ -3,17 +3,17 @@
     ViewData["Title"] = "Index";  
 }
 
-<h3>Index</h3>
+<h3>Items</h3>
 
-<table class="table">
-    <thead>
+<table class="table table-bordered table-striped">
+    <thead class="table-light">
         <tr>
-            <th>Name</th>
-            <th>Price</th>
-            <th>Serial</th>
-            <th>Category</th>
-            <th>Client</th>            
-            <th></th>
+            <th style="width: 15%;">Name</th>
+            <th style="width: 12%;">Price</th>
+            <th style="width: 20%;">Serial</th>
+            <th style="width: 15%;">Category</th>
+            <th style="width: 15%;">Client</th>            
+            <th style="width: 23%;">Actions</th>
         </tr>
     </thead>
     <tbody>
@@ -21,7 +21,7 @@
             <tr>
                 <td>@item.Name</td>
                 <td>@item.Price?.ToString("N2") $</td>
-                <td>@(item.Serial ?? "")</td>
+                <td><code>@(item.Serial ?? "")</code></td>
                 <td>@(item.Category?.Name ?? "")</td>
                 <td>@(item.Client?.Name ?? "")</td>
                 <td>
