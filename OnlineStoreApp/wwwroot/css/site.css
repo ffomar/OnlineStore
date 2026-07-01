@@ -322,12 +322,12 @@ input[type="text"], input[type="number"], input[type="email"], textarea {
 }
 
 .space-form .btn-primary {
-  background: linear-gradient(135deg, #0088FF, #00FFFF) !important;
-  color: black !important;
-  border: 2px solid #00FFFF !important;
+  background: #000000 !important;
+  color: #ffffff !important;
+  border: 2px solid #000000 !important;
   font-weight: bold;
   text-shadow: none;
-  box-shadow: 0 0 15px rgba(0, 255, 255, 0.5);
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.55);
   transition: all 0.3s ease;
   padding: 0.8rem 2.5rem !important;
   font-size: 1.05rem;
@@ -335,12 +335,93 @@ input[type="text"], input[type="number"], input[type="email"], textarea {
 }
 
 .space-form .btn-primary:hover {
-  background: linear-gradient(135deg, #00FFFF, #0088FF) !important;
-  box-shadow: 0 0 25px rgba(0, 255, 255, 0.8);
+  background: #1a1a1a !important;
+  box-shadow: 0 0 18px rgba(0, 0, 0, 0.65);
   transform: scale(1.05);
 }
 
 @keyframes twinkle {
   0%, 100% { opacity: 0.5; }
   50% { opacity: 1; }
+}
+
+body.is-buffering {
+  cursor: progress !important;
+}
+
+body.is-buffering * {
+  cursor: progress !important;
+}
+
+body.is-buffering::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: rgba(9, 10, 15, 0.55);
+  z-index: 9998;
+}
+
+body.is-buffering::after {
+  content: '';
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: 58px;
+  height: 58px;
+  margin-left: -29px;
+  margin-top: -29px;
+  border-radius: 50%;
+  border: 5px solid rgba(255, 255, 255, 0.35);
+  border-top-color: #ffffff;
+  animation: page-buffer-spin 0.85s linear infinite;
+  z-index: 9999;
+}
+
+.buffering-target {
+  opacity: 0.78;
+}
+
+@keyframes page-buffer-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.error-page {
+  min-height: 70vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 1rem;
+  padding: 2.5rem 1rem;
+}
+
+.error-page__rocket {
+  width: min(280px, 70vw);
+  height: auto;
+  filter: drop-shadow(0 14px 24px rgba(15, 23, 42, 0.35));
+}
+
+.error-page__rocket-emoji {
+  font-size: clamp(4rem, 10vw, 7rem);
+  line-height: 1;
+  filter: drop-shadow(0 12px 18px rgba(15, 23, 42, 0.35));
+}
+
+.error-page h1 {
+  border-bottom: 0;
+  margin: 0;
+  font-size: clamp(1.8rem, 3vw, 2.7rem);
+}
+
+.error-page p {
+  margin: 0;
+  max-width: 640px;
+}
+
+.error-page__request-id code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-size: 0.95rem;
 }

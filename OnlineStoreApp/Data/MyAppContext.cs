@@ -18,6 +18,8 @@ namespace MyApp.Data
 
         public DbSet<Client> Clients { set; get;}
 
+        public DbSet<ErrorLog> ErrorLogs { get; set; } = null!;
+
 
         // Model relationships and seed data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -40,6 +42,11 @@ namespace MyApp.Data
                 .WithMany(x => x.Items)
                 .HasForeignKey(i => i.CategoryId)
                 .IsRequired(false);
+
+            // Store one row per unique error signature.
+            modelBuilder.Entity<ErrorLog>()
+                .HasIndex(x => x.Signature)
+                .IsUnique();
 
 
             // Seed 
